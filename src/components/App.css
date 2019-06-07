@@ -5,3 +5,16 @@ body,
     background: #eee;
     padding: 1em;
 }
+
+/* Mobile */
+
+@media only screen and (max-width: 767px) {
+    [sideBar="mobile hidden"],
+    [class*="tablet only"]:not(.mobile),
+    [class*="computer only"]:not(.mobile),
+    [class*="large monitor only"]:not(.mobile),
+    [class*="widescreen monitor only"]:not(.mobile),
+    [class*="or lower hidden"] {
+      display: none !important;
+    }
+}
