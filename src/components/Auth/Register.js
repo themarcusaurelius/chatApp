@@ -17,7 +17,8 @@ class Register extends Component {
         email: '',
         password: '',
         passwordConfirmation: '',
-        errors: []
+        errors: [],
+        loading: false
     }
 
     isFormValid = () => {
@@ -38,7 +39,12 @@ class Register extends Component {
     };
 
     isFormEmpty = ({ username, email, password, passwordConfirmation }) => {
-        return !username.length || !email.length || !password.length || !passwordConfirmation.length;
+        return (
+            !username.length || 
+            !email.length || 
+            !password.length || 
+            !passwordConfirmation.length
+        );
     };
 
     isPasswordValid = ({ password, passwordConfirmation }) => {
@@ -51,31 +57,44 @@ class Register extends Component {
         }
     };
 
-    displayErrors = errors => errors.map((error, i) => <p key={i}>{error.message}</p>);
+    displayErrors = errors => 
+        errors.map((error, i) => <p key={i}>{error.message}</p>);
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value })
     };
 
     handleSubmit = event => {
-        if (this.isFormValid()) {
-
-        }
-
         event.preventDefault();
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(createdUser => {
-                console.log(createdUser)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+
+        if (this.isFormValid()) {
+            this.setState({ errors: [], loading: true })
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.state.email, this.state.password)
+                .then(createdUser => {
+                    console.log(createdUser)
+                    this.setState({ loading: false })
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.setState({ 
+                        errors: this.state.errors.concat(err), 
+                        loading: false 
+                    });
+                });
+        }
     };
     
     render() {
-        const { username, email, password, passwordConfirmation, errors } = this.state
+        const { 
+            username, 
+            email, 
+            password, 
+            passwordConfirmation, 
+            errors,
+            loading
+        } = this.state
 
         return (
             <Grid textAlign="center" verticalAlign="middle" className="app">
@@ -122,7 +141,14 @@ class Register extends Component {
                                 value={passwordConfirmation}
                                 type="password"
                             />
-                            <Button color="violet" fluid size="large">Submit</Button>
+                            <Button 
+                                disabled={loading} 
+                                className={loading ? 'loading' : ''} 
+                                color="violet" 
+                                fluid size="large"
+                            >
+                                Submit
+                            </Button>
                         </Segment>
                     </Form>
                     {errors.length > 0 && (
