@@ -6,15 +6,19 @@ body,
     padding: 1em;
 }
 
-/* Mobile */
-
-@media only screen and (max-width: 767px) {
-    [sideBar="mobile hidden"],
-    [class*="tablet only"]:not(.mobile),
-    [class*="computer only"]:not(.mobile),
-    [class*="large monitor only"]:not(.mobile),
-    [class*="widescreen monitor only"]:not(.mobile),
-    [class*="or lower hidden"] {
-      display: none !important;
-    }
+/* Messages */
+.messages {
+  height: 440px;
+  overflow-y: scroll;
 }
+
+/* Message Form */
+.message__form {
+  position: fixed !important;
+  bottom: 1em;
+  margin-left: 320px !important;
+  left: 0;
+  right: 1em;
+  z-index: 200;
+}
+
