@@ -9,7 +9,7 @@ import Messages from './Messages/Messages';
 import MetaPanel from './MetaPanel/MetaPanel';
 
 
-
+//Add A Tab Here Maybe
 const App = ({ currentUser, currentChannel }) => (
   <Grid columns="equal" className="app" style={{ background: "#eee"}}>
     <ColorPanel />
