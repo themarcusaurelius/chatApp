@@ -25,8 +25,7 @@ const user_reducer = (state = initialUserState, action) => {
 
 const initialChannelState = {
     currentChannel: null, 
-    isPrivateChannel: false,
-    isLoading: true
+    isPrivateChannel: false, 
 };
 
 
