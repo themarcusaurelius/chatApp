@@ -12,7 +12,10 @@ class MessagesHeader extends React.Component {
                     <span>
                         {channelName}
                         <Icon name={"star outline"} color="black" />
-                        <Header.Subheader>{numUniqueUsers}</Header.Subheader>
+                        <Header.Subheader>
+                            <Icon name={"user outline"} color="teal" />  
+                            {numUniqueUsers}
+                        </Header.Subheader>
                     </span>
                 </Header>
 
