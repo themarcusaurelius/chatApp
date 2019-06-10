@@ -133,6 +133,7 @@ class Channels extends React.Component {
 
     changeChannel = channel => {
         this.setActiveChannel(channel);
+        this.clearNotifications();
         this.props.setCurrentChannel(channel)
         this.props.setPrivateChannel(false);
         this.setState({ channel });
@@ -166,8 +167,9 @@ class Channels extends React.Component {
         if (count > 0) return count;
     }
 
-    displayChannels = channels => (
-        channels.length > 0 && channels.map(channel => (
+    displayChannels = channels =>
+        channels.length > 0 && 
+        channels.map(channel => (
            <Menu.Item
             key={channel.id}
             onClick={() => this.changeChannel(channel)}
@@ -180,8 +182,7 @@ class Channels extends React.Component {
                )}
                # {channel.name}
            </Menu.Item> 
-        ))
-    )
+        ));
 
     isFormValid = ({ channelName, channelDetails }) => channelName && channelDetails;
 
