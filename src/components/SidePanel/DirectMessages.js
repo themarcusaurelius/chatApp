@@ -37,7 +37,9 @@ class DirectMessages extends Component {
                 const ref = this.state.presenceRef.child(currentUserUid);
                 ref.set(true);
                 ref.onDisconnect().remove(err => {
-                    console.error(err)
+                    if (err !== null) {
+                        console.error(err)
+                    }
                 })
             }
         });

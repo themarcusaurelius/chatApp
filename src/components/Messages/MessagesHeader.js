@@ -8,7 +8,9 @@ class MessagesHeader extends React.Component {
             numUniqueUsers, 
             handleSearchChange, 
             searchLoading,
-            isPrivateChannel 
+            isPrivateChannel,
+            handleStar,
+            isChannelStarred
         } = this.props;
 
         return (
@@ -17,12 +19,18 @@ class MessagesHeader extends React.Component {
                 <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0}}>
                     <span>
                         {channelName}
-                        {!isPrivateChannel && <Icon name={"star outline"} color="black" />}
-                        <Header.Subheader>
-                            <Icon name={"user outline"} color="teal" />  
-                            {numUniqueUsers}
-                        </Header.Subheader>
-                    </span>
+                        {!isPrivateChannel && (
+                            <Icon 
+                                onClick={handleStar} 
+                                name={isChannelStarred ? 'star' : 'star outline'} 
+                                color={isChannelStarred ? 'yellow' : 'black'}
+                            />
+                        )}
+                     </span>        
+                    <Header.Subheader>
+                        <Icon name={"user outline"} color="teal" />  
+                        {numUniqueUsers}
+                    </Header.Subheader>
                 </Header>
 
                 {/* Channel Search Input */}
