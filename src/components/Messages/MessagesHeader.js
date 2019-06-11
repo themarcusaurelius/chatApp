@@ -14,7 +14,7 @@ class MessagesHeader extends React.Component {
         } = this.props;
 
         return (
-            <Segment clearing>
+            <Segment clearing raised>
                 {/* Channel Title */}
                 <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0}}>
                     <span>

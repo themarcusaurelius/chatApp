@@ -10,15 +10,19 @@ import MetaPanel from './MetaPanel/MetaPanel';
 
 
 //Add A Tab Here Maybe
-const App = ({ currentUser, currentChannel, isPrivateChannel }) => (
-  <Grid columns="equal" className="app" style={{ background: "#eee"}}>
-    <ColorPanel />
+const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts, primaryColor, secondaryColor }) => (
+  <Grid columns="equal" className="app" style={{ background: secondaryColor}}>
+    <ColorPanel 
+      key={currentUser && currentUser.name}
+      currentUser={currentUser}
+    />
     <SidePanel 
       key={currentUser && currentUser.id}
-      currentUser={currentUser} 
+      currentUser={currentUser}
+      primaryColor={primaryColor}
     />
 
-    <Grid.Column style={{ marginLeft: 320 }}>
+    <Grid.Column style={{ marginLeft: 320  }}>
       <Messages
         key={currentChannel && currentChannel.id}
         currentChannel={currentChannel}
@@ -30,7 +34,9 @@ const App = ({ currentUser, currentChannel, isPrivateChannel }) => (
     <Grid.Column width={4}>
       <MetaPanel
         key={currentChannel && currentChannel.id}
-        isPrivateChannel={isPrivateChannel} 
+        userPosts={userPosts}
+        isPrivateChannel={isPrivateChannel}
+        currentChannel={currentChannel}
       />
     </Grid.Column>
     
@@ -40,7 +46,10 @@ const App = ({ currentUser, currentChannel, isPrivateChannel }) => (
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser,
   currentChannel: state.channel.currentChannel,
-  isPrivateChannel: state.channel.isPrivateChannel
+  isPrivateChannel: state.channel.isPrivateChannel,
+  userPosts: state.channel.userPosts,
+  primaryColor: state.colors.primaryColor,
+  secondaryColor: state.colors.secondaryColor
 });
 
 export default connect(mapStateToProps)(App);

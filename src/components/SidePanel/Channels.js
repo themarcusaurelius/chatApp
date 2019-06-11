@@ -14,6 +14,7 @@ class Channels extends React.Component {
         channelDetails: '',
         channelsRef: firebase.database().ref('channels'),
         messagesRef: firebase.database().ref('messages'),
+        typingRef: firebase.database().ref("typing"),
         notifications: [],
         modal: false,
         firstLoad: true
@@ -52,7 +53,9 @@ class Channels extends React.Component {
     handleNotifications = (channelId, currentChannelId, notifications, snap) => {
         let lastTotal = 0;
 
-        let index = notifications.findIndex(notification => notification.id === channelId);
+        let index = notifications.findIndex(
+            notification => notification.id === channelId
+        );
 
         if (index !== -1) {
             if (channelId !== currentChannelId) {
@@ -77,6 +80,9 @@ class Channels extends React.Component {
 
     removeListeners = () => {
         this.state.channelsRef.off();
+        this.state.channels.forEach(channel => {
+            this.state.messagesRef.child(channel.id).off();
+        });
     };
 
     setFirstChannel = () => {
@@ -133,6 +139,10 @@ class Channels extends React.Component {
 
     changeChannel = channel => {
         this.setActiveChannel(channel);
+        this.state.typingRef
+            .child(this.state.channel.id)
+            .child(this.state.user.uid)
+            .remove();
         this.clearNotifications();
         this.props.setCurrentChannel(channel)
         this.props.setPrivateChannel(false);
@@ -184,7 +194,8 @@ class Channels extends React.Component {
            </Menu.Item> 
         ));
 
-    isFormValid = ({ channelName, channelDetails }) => channelName && channelDetails;
+    isFormValid = ({ channelName, channelDetails }) => 
+        channelName && channelDetails;
 
     openModal = () => this.setState({ modal: true });
 
