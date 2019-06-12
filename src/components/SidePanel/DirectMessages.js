@@ -77,7 +77,7 @@ class DirectMessages extends Component {
        this.setState({ users: updatedUsers }) 
     }
     
-    isUserOnline = user => user.staus === 'online';
+    isUserOnline = user => user.status === 'online';
 
     changeChannel = user => {
        const channelId = this.getChannelId(user.uid)
